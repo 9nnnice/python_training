@@ -15,7 +15,6 @@ class test_add_contact(unittest.TestCase):
         self.wd.implicitly_wait(60)
 
     def test_test_add_contact(self):
-        success = True
         wd = self.wd
         # open home page
         wd.get("http://localhost/addressbook/")
@@ -45,7 +44,6 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_link_text("home page").click()
         # logout
         wd.find_element_by_link_text("Logout").click()
-        self.assertTrue(success)
 
     def tearDown(self):
         self.wd.quit()
