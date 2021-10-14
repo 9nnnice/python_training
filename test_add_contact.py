@@ -70,3 +70,5 @@ class test_add_contact(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    ТЕСТОВЫЙ!!!
