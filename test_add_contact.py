@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium.webdriver.firefox.webdriver import WebDriver
 import unittest
+from contact import Contact
 
 def is_alert_present(wd):
     try:
@@ -18,7 +19,7 @@ class test_add_contact(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, first_name="Kostyan", middle_name="Testin", last_name="Testovich")
+        self.create_contact(wd, Contact(first_name="Kostyan", middle_name="Testin", last_name="Testovich"))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -26,7 +27,7 @@ class test_add_contact(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, first_name="", middle_name="", last_name="")
+        self.create_contact(wd, Contact(first_name="", middle_name="", last_name=""))
         self.return_to_home_page(wd)
         self.logout(wd)
 
@@ -36,19 +37,19 @@ class test_add_contact(unittest.TestCase):
     def return_to_home_page(self, wd):
         wd.find_element_by_link_text("home page").click()
 
-    def create_contact(self, wd, first_name, middle_name, last_name):
+    def create_contact(self, wd, contact):
         # init contact creation
         wd.find_element_by_link_text("add new").click()
         # fill contact form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(first_name)
+        wd.find_element_by_name("firstname").send_keys(contact.first_name)
         wd.find_element_by_name("middlename").click()
         wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(middle_name)
+        wd.find_element_by_name("middlename").send_keys(contact.middle_name)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(last_name)
+        wd.find_element_by_name("lastname").send_keys(contact.last_name)
         # submit contact creation
         wd.find_element_by_name("submit").click()
 
