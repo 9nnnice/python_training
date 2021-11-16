@@ -7,11 +7,11 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
 
-    def modify(self, contact):
+    def modification(self, contact):
         wd = self.app.wd
-        # init contact creation
-        wd.find_element_by_link_text("add new").click()
-        # fill contact form
+        # init contact modification
+        wd.find_element_by_xpath("//*[@title='Edit']").click()
+        # modification contact form
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
         wd.find_element_by_name("nickname").send_keys(contact.nickname)
@@ -21,8 +21,8 @@ class ContactHelper:
         wd.find_element_by_name("company").click()
         wd.find_element_by_name("company").clear()
         wd.find_element_by_name("company").send_keys(contact.company)
-        # submit contact creation
-        wd.find_element_by_name("submit").click()
+        # submit contact modification
+        wd.find_element_by_name("update").click()
         self.return_to_home_page()
 
     def create(self, contact):

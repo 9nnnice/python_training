@@ -3,7 +3,7 @@ class GroupHelper:
     def __init__(self, app):
         self.app = app
 
-    def modify(self, group):
+    def modification(self, group):
         wd = self.app.wd
         self.open_groups_page()
         # init group modification
