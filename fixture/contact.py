@@ -9,6 +9,7 @@ class ContactHelper:
 
     def modification(self, contact):
         wd = self.app.wd
+        self.open_contact_page()
         # init contact modification
         wd.find_element_by_xpath("//*[@title='Edit']").click()
         # modification contact form
