@@ -12,16 +12,7 @@ class ContactHelper:
         self.open_contacts_page()
         # init contact modification
         wd.find_element_by_xpath("//*[@title='Edit']").click()
-        # modification contact form
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.first_name)
-        wd.find_element_by_name("middlename").click()
-        wd.find_element_by_name("middlename").clear()
-        wd.find_element_by_name("middlename").send_keys(contact.middle_name)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.last_name)
+        self.fill_contact_form(contact)
         # submit contact modification
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
