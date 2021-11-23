@@ -1,7 +1,8 @@
 from geom2d import *
 
-l1 = [Point(3, 1), Point(0, 0), Point(1, 2)]
+l = [Point(i, i*i) for i in range(-5, 6)]
 
-l2 = sorted(l1, key=lambda p: p.distance(Point(0, 0)))
-print(l1)
+l2 = [Point(el.x, -el.y) for el in l]
+
+print(l)
 print(l2)
