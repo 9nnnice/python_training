@@ -9,10 +9,10 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contacts_page()
         contacts = []
-        for element in wd.find_elements_by_css_selector("td.center"):
+        for element in wd.find_elements_by_css_selector("tr.odd"):
             text = element.text
             id = element.find_element_by_name("selected[]").get_attribute("id")
-            contacts.append(Contact(name=text, id=id))
+            contacts.append(Contact(first_name=text, id=id))
         return contacts
 
     def count(self):
