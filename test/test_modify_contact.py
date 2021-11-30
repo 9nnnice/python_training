@@ -1,7 +1,10 @@
 from model.contact import Contact
 
 
-def test_modification_contact(app):
+def test_modify_contact(app):
+    old_contacts = app.contact.get_contact_list()
     if app.contact.count() == 0:
         app.contact.create(Contact(first_name="test"))
-    app.contact.modification(Contact(first_name="Patchfirst", middle_name="Patchmiddle", last_name="Patchlast"))
+    app.contact.modify_first_contact(Contact(first_name="Patchfirst", middle_name="Patchmiddle", last_name="Patchlast"))
+    new_contacts = app.contact.get_contact_list()
+    assert len(old_contacts) == len(new_contacts)

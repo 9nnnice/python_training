@@ -25,7 +25,7 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
 
-    def modification(self, contact):
+    def modify_first_contact(self, contact):
         wd = self.app.wd
         self.open_contacts_page()
         # init contact modification
