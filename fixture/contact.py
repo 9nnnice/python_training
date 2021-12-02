@@ -1,3 +1,5 @@
+import time
+
 from model.contact import Contact
 
 class ContactHelper:
@@ -6,6 +8,7 @@ class ContactHelper:
         self.app = app
 
     def get_contact_list(self):
+        time.sleep(1)
         wd = self.app.wd
         self.open_contacts_page()
         contacts = []
