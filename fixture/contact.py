@@ -67,14 +67,24 @@ class ContactHelper:
             wd.find_element_by_name(field_name).send_keys(text)
 
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_contacts_page()
-        # select first group
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
         self.contact_cache = None
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
+    def select_first_contact(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]").click()
 
     def open_contacts_page(self):
         wd = self.app.wd
