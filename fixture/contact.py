@@ -7,17 +7,20 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    contact_cache = None
+
     def get_contact_list(self):
-        time.sleep(1)
-        wd = self.app.wd
-        self.open_contacts_page()
-        contacts = []
-        for element in wd.find_elements_by_css_selector("tr[name=entry]"):
-            lastname = element.find_element_by_xpath("td[2]").text
-            firstname = element.find_element_by_xpath("td[3]").text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(last_name=lastname, first_name=firstname, id=id))
-        return contacts
+        if self.contact_cache is None:
+            time.sleep(1)
+            wd = self.app.wd
+            self.open_contacts_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_css_selector("tr[name=entry]"):
+                lastname = element.find_element_by_xpath("td[2]").text
+                firstname = element.find_element_by_xpath("td[3]").text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(last_name=lastname, first_name=firstname, id=id))
+        return list(self.contact_cache)
 
     def count(self):
         wd = self.app.wd
@@ -37,6 +40,7 @@ class ContactHelper:
         # submit contact modification
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def create(self, contact):
         wd = self.app.wd
@@ -47,6 +51,7 @@ class ContactHelper:
         # submit contact creation
         wd.find_element_by_name("submit").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def fill_contact_form(self, contact):
         wd = self.app.wd
@@ -69,6 +74,7 @@ class ContactHelper:
         # submit deletion
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
+        self.contact_cache = None
 
     def open_contacts_page(self):
         wd = self.app.wd
