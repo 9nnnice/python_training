@@ -36,6 +36,7 @@ class ContactHelper:
         self.open_contacts_page()
         # init contact modification
         wd.find_element_by_xpath("//*[@title='Edit']").click()
+        # fill contact form
         self.fill_contact_form(new_contact_data)
         # submit contact modification
         wd.find_element_by_name("update").click()
