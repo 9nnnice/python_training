@@ -31,11 +31,11 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
 
-    def modify_first_contact(self, new_contact_data):
+    def modify_first_contact(self, new_contact_data, index):
         wd = self.app.wd
         self.open_contacts_page()
         # init contact modification
-        wd.find_element_by_xpath("//*[@title='Edit']").click()
+        wd.find_element_by_xpath("//*[@title='Edit']")[index].click()
         # fill contact form
         self.fill_contact_form(new_contact_data)
         # submit contact modification
