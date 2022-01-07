@@ -15,10 +15,10 @@ class ContactHelper:
             wd = self.app.wd
             self.open_contacts_page()
             self.contact_cache = []
-            for element in wd.find_elements_by_css_selector("tr[name=entry]"):
-                lastname = element.find_element_by_xpath("td[2]").text
-                firstname = element.find_element_by_xpath("td[3]").text
-                id = element.find_element_by_name("selected[]").get_attribute("value")
+            for row in wd.find_elements_by_css_selector("tr[name=entry]"):
+                lastname = row.find_element_by_xpath("td[2]").text
+                firstname = row.find_element_by_xpath("td[3]").text
+                id = row.find_element_by_name("selected[]").get_attribute("value")
                 self.contact_cache.append(Contact(last_name=lastname, first_name=firstname, id=id))
         return list(self.contact_cache)
 
