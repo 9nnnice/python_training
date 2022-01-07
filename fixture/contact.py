@@ -15,12 +15,12 @@ class ContactHelper:
             wd = self.app.wd
             self.open_contacts_page()
             self.contact_cache = []
-            for row in wd.find_elements_by_css_selector("tr[name=entry]"):
-                cells = row.find_elements_by_tag_name("td")
-                firstname = cells[3].text
-                lastname = row.find_element_by_xpath("td[2]").text
-                id = row.find_element_by_name("selected[]").get_attribute("value")
-                self.contact_cache.append(Contact(last_name=lastname, first_name=firstname, id=id))
+            for row in wd.find_elements_by_name("entry"):
+                cells = row.find_elements_by_xpath("td")
+                firstname = cells[2].text
+                lastname = cells[1].text
+                id = cells[0].find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(first_name=firstname, last_name=lastname, id=id))
         return list(self.contact_cache)
 
     def count(self):
