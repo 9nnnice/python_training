@@ -40,6 +40,19 @@ class ContactHelper:
         cell = row.find_elements_by_tag_name("td")(6)
         cell.find_element_by_tag_name("a").click()
 
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_contact_to_edit_by_index(index)
+        first_name = wd.find_element_by_name("firstname").get_attribute("value")
+        last_name = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        homephone = wd.find_element_by_name("home").get_attribute("value")
+        workphone = wd.find_element_by_name("work").get_attribute("value")
+        mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
+        return Contact(first_name=first_name, last_name=last_name, id=id,
+                       homephone=homephone, mobilephone=mobilephone,
+                       workphone=workphone)
+
     def count(self):
         wd = self.app.wd
         self.open_home_page()
@@ -112,17 +125,3 @@ class ContactHelper:
         wd = self.app.wd
         if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_xpath("//input[@value='Send e-Mail']")) > 0):
             wd.find_element_by_link_text("home").click()
-
-    def get_contact_info_from_edit_page(self, index):
-        wd = self.app.wd
-        self.open_contact_to_edit_by_index(index)
-        first_name = wd.find_element_by_name("firstname").get_attribute("value")
-        last_name = wd.find_element_by_name("lastname").get_attribute("value")
-        id = wd.find_element_by_name("id").get_attribute("value")
-        homephone = wd.find_element_by_name("home").get_attribute("value")
-        workphone = wd.find_element_by_name("work").get_attribute("value")
-        mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
-        secondaryphone = wd.find_element_by_name("fax").get_attribute("value")
-        return Contact(first_name=first_name, last_name=last_name, id=id,
-                       homephone=homephone, mobilephone=mobilephone,
-                       workphone=workphone, secondaryphone=secondaryphone)
