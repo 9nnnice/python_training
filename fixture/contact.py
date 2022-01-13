@@ -1,5 +1,6 @@
 import time
 import re
+import random
 
 from model.contact import Contact
 
@@ -17,6 +18,7 @@ class ContactHelper:
             self.open_home_page()
             self.contact_cache = []
             for row in wd.find_elements_by_name("entry"):
+                random.choice("entry")
                 cells = row.find_elements_by_xpath("td")
                 lastname = cells[1].text
                 firstname = cells[2].text
