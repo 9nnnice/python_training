@@ -59,9 +59,8 @@ class ContactHelper:
         homephone = re.search("H: (.*)", text).group(1)
         workphone = re.search("W: (.*)", text).group(1)
         mobilephone = re.search("M: (.*)", text).group(1)
-        all_phones = homephone + "\n" + workphone + "\n" + mobilephone
         return Contact(homephone=homephone, mobilephone=mobilephone,
-                       workphone=workphone, all_phones_from_view_page=all_phones)
+                       workphone=workphone)
 
     def count(self):
         wd = self.app.wd
