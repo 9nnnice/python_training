@@ -52,9 +52,10 @@ class ContactHelper:
         homephone = wd.find_element_by_name("home").get_attribute("value")
         workphone = wd.find_element_by_name("work").get_attribute("value")
         mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
+        secondhomephone = wd.find_element_by_name("phone2").get_attribute("value")
         return Contact(first_name=first_name, last_name=last_name, id=id,
                        homephone=homephone, mobilephone=mobilephone,
-                       workphone=workphone)
+                       workphone=workphone, secondhomephone=secondhomephone)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
@@ -63,8 +64,9 @@ class ContactHelper:
         homephone = re.search("H: (.*)", text).group(1)
         workphone = re.search("W: (.*)", text).group(1)
         mobilephone = re.search("M: (.*)", text).group(1)
+        secondhomephone = re.search("P: (.*)", text).group(1)
         return Contact(homephone=homephone, mobilephone=mobilephone,
-                       workphone=workphone)
+                       workphone=workphone, secondhomephone=secondhomephone)
 
     def count(self):
         wd = self.app.wd
