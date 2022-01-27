@@ -4,7 +4,7 @@ from random import randrange
 def test_alldata_on_home_page(app):
     # contact_from_home_page = app.contact.get_contact_list()[0]
     _list = app.contact.get_contact_list()
-    index = randrange(len(_list)) - 1
+    index = randrange(len(_list))
     contact_from_home_page = _list[index]
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
     assert contact_from_home_page.first_name == contact_from_edit_page.first_name
