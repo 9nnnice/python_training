@@ -1,6 +1,5 @@
 from model.contact import Contact
-import random
-import string
+
 
 constant = [
     Contact(first_name="Kostyan", middle_name="Testin", last_name="Testovich"),
