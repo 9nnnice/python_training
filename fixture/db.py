@@ -17,7 +17,7 @@ class DbFixture:
             cursor.execute("select group_id, group_name, group_header, group_footer from group_list")
             for row in cursor:
                 (id, name, header, footer) = row
-                list.append(Group(id=id, name=name, header=header, footer=footer))
+                list.append(Group(id=str(id), name=name, header=header, footer=footer))
         finally:
             cursor.close()
         return list
