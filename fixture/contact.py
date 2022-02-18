@@ -96,6 +96,16 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
+    def modify_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        self.open_edit_page(id)
+        # fill contact form
+        self.fill_contact_form(new_contact_data)
+        # submit contact modification
+        wd.find_element_by_name("update").click()
+        self.return_to_home_page()
+        self.contact_cache = None
+
     def create(self, contact):
         wd = self.app.wd
         self.open_home_page()
@@ -144,3 +154,9 @@ class ContactHelper:
         wd = self.app.wd
         if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements_by_xpath("//input[@value='Send e-Mail']")) > 0):
             wd.find_element_by_link_text("home").click()
+
+    def open_edit_page(self, id):
+        wd = self.app.wd
+        url = self.app.base_url + "edit.php?id=" + id
+        if not (wd.current_url.endswith(url)):
+            wd.get(url)
