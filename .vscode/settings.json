@@ -1,0 +1,9 @@
+{
+	"python.testing.pytestArgs": [
+		"--target=target-wsl.json",
+		"--check_ui",
+		"test"
+	],
+	"python.testing.unittestEnabled": false,
+	"python.testing.pytestEnabled": true
+}
