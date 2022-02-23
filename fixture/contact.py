@@ -150,7 +150,7 @@ class ContactHelper:
     def delete_contact_by_id(self, id):
         wd = self.app.wd
         self.open_home_page()
-        self.select_contact_by_index(id)
+        self.select_contact_by_id(id)
         # submit deletion
         wd.find_element(By.XPATH, "//input[@value='Delete']").click()
         wd.switch_to.alert.accept()
@@ -162,7 +162,7 @@ class ContactHelper:
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
-        wd.find_elements(By.XPATH, "//input[value=%s]" % id).click()
+        wd.find_element(By.ID, id).click()
 
     def select_first_contact(self, index):
         wd = self.app.wd

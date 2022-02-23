@@ -1,4 +1,5 @@
 from model.group import Group
+from time import sleep
 import random
 
 
@@ -12,11 +13,13 @@ def test_delete_some_group(app, db, check_ui):
 
     app.group.delete_group_by_id(group.id)
 
+    sleep(1)  # Ждем пока из удалится запись?
+
     new_groups = db.get_group_list()
 
     assert len(old_groups) - 1 == len(new_groups)
 
-    filtered = [i for i in old_contacts if i.id == contact.id]
+    filtered = [i for i in old_groups if i.id != group.id]
 
     assert sorted(filtered, key=Group.id_or_max) == sorted(
         new_groups, key=Group.id_or_max)

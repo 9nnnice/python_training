@@ -13,6 +13,8 @@ def test_delete_some_contact(app, db, check_ui):
 
     app.contact.delete_contact_by_id(contact.id)
 
+    sleep(1)  # Ждем пока из удалится запись?
+
     new_contacts = db.get_contact_list()
 
     assert len(old_contacts) - 1 == len(new_contacts)
