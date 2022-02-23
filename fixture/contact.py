@@ -4,6 +4,7 @@ import random
 
 from model.contact import Contact
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 
 
 class ContactHelper:
@@ -26,6 +27,26 @@ class ContactHelper:
                 address = cells[3].text
                 id = cells[0].find_element(
                     By.NAME, "selected[]").get_attribute("value")
+                all_emails = cells[4].text
+                all_phones = cells[5].text
+                self.contact_cache.append(Contact(first_name=firstname, last_name=lastname, id=id, address=address,
+                                                  all_phones_from_home_page=all_phones, all_emails_from_home_page=all_emails))
+        return list(self.contact_cache)
+
+    def get_group_contact_list(self, group):
+        if self.contact_cache is None:
+            time.sleep(1)
+            wd = self.app.wd
+            selector = Select(wd.find_element(By.NAME, 'group'))
+            selector.select_by_value(group.id)
+            time.sleep(1)
+            self.contact_cache = []
+            for row in wd.find_elements(By.NAME, "entry"):
+                cells = row.find_elements(By.XPATH, "td")
+                lastname = cells[1].text
+                firstname = cells[2].text
+                address = cells[3].text
+                id = cells[0].find_element(By.NAME, "selected[]").get_attribute("value")
                 all_emails = cells[4].text
                 all_phones = cells[5].text
                 self.contact_cache.append(Contact(first_name=firstname, last_name=lastname, id=id, address=address,
@@ -178,3 +199,15 @@ class ContactHelper:
         url = self.app.base_url + "edit.php?id=" + id
         if not (wd.current_url.endswith(url)):
             wd.get(url)
+
+    def add_to_group(self, contact, group):
+        self.select_contact_by_id(contact.id)
+        Select(self.app.wd.find_element(By.NAME, 'to_group')).select_by_value(group.id)
+        self.app.wd.find_element(By.CSS_SELECTOR, "input[value='Add to']").click()
+        self.open_home_page()
+
+    def remove_from_group(self, contact, group):
+        Select(self.app.wd.find_element(By.NAME, 'group')).select_by_value(group.id)
+        self.select_contact_by_id(contact.id)
+        self.app.wd.find_element(By.NAME, "remove").click()
+        self.open_home_page()
