@@ -19,9 +19,9 @@ def test_delete_some_group(app, db, check_ui):
 
     assert len(old_groups) - 1 == len(new_groups)
 
-    filtered = [i for i in old_groups if i.id != group.id]
+    old_groups.remove(group)
 
-    assert sorted(filtered, key=Group.id_or_max) == sorted(
+    assert sorted(old_groups, key=Group.id_or_max) == sorted(
         new_groups, key=Group.id_or_max)
 
     if check_ui:

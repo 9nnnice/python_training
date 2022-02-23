@@ -19,9 +19,9 @@ def test_delete_some_contact(app, db, check_ui):
 
     assert len(old_contacts) - 1 == len(new_contacts)
 
-    filtered = [i for i in old_contacts if i.id != contact.id]
+    old_contacts.remove(contact)
 
-    assert sorted(filtered, key=Contact.id_or_max) == sorted(
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(
         new_contacts, key=Contact.id_or_max)
 
     if check_ui:
