@@ -11,11 +11,17 @@ def test_modify_group(app, db, check_ui):
 
     group = random.choice(old_groups)
 
-    app.group.modify_group_by_id(group.id, Group(name="Patchname"))
+    new_group = Group(id=group.id, name="Patchname")
+
+    app.group.modify_group_by_id(new_group.id, new_group)
 
     new_groups = db.get_group_list()
 
-    assert sorted(old_groups, key=Group.id_or_max) != sorted(
+    index = old_groups.index(group)
+
+    old_groups[index] = new_group
+
+    assert sorted(old_groups, key=Group.id_or_max) == sorted(
         new_groups, key=Group.id_or_max)
 
     if check_ui:

@@ -1,11 +1,7 @@
 import random
-from time import sleep
-from fixture.orm import ORMFixture
 from fixture.contact import Contact
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.remote.webelement import WebElement
-
 
 def test_add_contacts_to_group(app):
     # Выбираем группу

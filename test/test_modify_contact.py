@@ -13,12 +13,17 @@ def test_modify_contact(app, db, check_ui):
 
     contact = random.choice(old_contacts)
 
-    app.contact.modify_contact_by_id(contact.id, Contact(
-        first_name="Patchfirst", middle_name="Patchmiddle", last_name="Patchlast"))
+    new_contact = Contact(id=contact.id, first_name="Patchfirst", middle_name="Patchmiddle", last_name="Patchlast")
+
+    app.contact.modify_contact_by_id(new_contact.id, new_contact)
 
     new_contacts = db.get_contact_list()
 
-    assert sorted(old_contacts, key=Contact.id_or_max) != sorted(
+    index = old_contacts.index(new_contact)
+
+    old_contacts[index] = new_contact
+
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(
         new_contacts, key=Contact.id_or_max)
 
     if check_ui:
