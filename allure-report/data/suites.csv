@@ -1,0 +1,6 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Fri Feb 25 07:16:23 MSK 2022","Fri Feb 25 07:16:25 MSK 2022","1964","test","test_add_group","","","","test_add_group[None:nameN3GtsJdg:headerjUoXFhF:footer2cl9Jt8tA]",""
+"passed","Fri Feb 25 07:16:22 MSK 2022","Fri Feb 25 07:16:23 MSK 2022","1080","test","test_add_group","","","","test_add_group[None:nameqTqryFTYb:headerIjBtLPUVdO:footer1T]",""
+"passed","Fri Feb 25 07:16:21 MSK 2022","Fri Feb 25 07:16:22 MSK 2022","1525","test","test_add_group","","","","test_add_group[None:name7r7U:headerBSjAVyhMTUFnxN:footersJr5x3ne1ZIHIK]",""
+"passed","Fri Feb 25 07:16:26 MSK 2022","Fri Feb 25 07:16:28 MSK 2022","1937","test","test_add_group","","","","test_add_group[None:nameBH8ZVh:headerd89PoxnRRAoS:footer5Nn]",""
+"passed","Fri Feb 25 07:16:28 MSK 2022","Fri Feb 25 07:16:29 MSK 2022","1111","test","test_add_group","","","","test_add_group[None:namehi:headerXNjxtUN1sD:footer7x]",""
