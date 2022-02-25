@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="18" time="56.517" timestamp="2022-02-25T06:31:14.789232" hostname="DESKTOP-A78EH0C"><testcase classname="test.test_add_contact" name="test_add_contact[None:Kostyan]" time="6.758" /><testcase classname="test.test_add_contact" name="test_add_contact[None:KostyanLsmRdC89]" time="2.353" /><testcase classname="test.test_add_contact" name="test_add_contact[None:KostyandmraunIz6]" time="2.302" /><testcase classname="test.test_add_contact" name="test_add_contact[None:KostyanjqXgWf]" time="2.126" /><testcase classname="test.test_add_contact" name="test_add_contact[None:KostyankH]" time="2.248" /><testcase classname="test.test_add_contact_to_group" name="test_add_contacts_to_group" time="14.842" /><testcase classname="test.test_add_contact_to_group" name="test_remove_contact_from_group" time="0.551"><failure message="IndexError: list index out of range">app = &lt;fixture.application.Application object at 0x000001FBC1E2EA90&gt;
+
+    def test_remove_contact_from_group(app):
+        # Выбираем группу
+        groups = app.orm.get_group_list()
+        group = random.choice(groups)
+    
+        # Фильтруем контакты по группе
+        Select(app.wd.find_element(By.NAME, 'group')).select_by_value(group.id)
+    
+        # Выбираем контакт
+        contacts = app.orm.get_contacts_in_group(group)
+&gt;       contact = random.choice(contacts)
+
+test\test_add_contact_to_group.py:38: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;random.Random object at 0x000001FBBF1C0010&gt;, seq = []
+
+    def choice(self, seq):
+        """Choose a random element from a non-empty sequence."""
+        # raises IndexError if seq is empty
+&gt;       return seq[self._randbelow(len(seq))]
+E       IndexError: list index out of range
+
+..\..\shiningpanda\jobs\d8165b04\virtualenvs\d41d8cd9\lib\random.py:346: IndexError</failure></testcase><testcase classname="test.test_add_group" name="test_add_group[None:name7r7U:headerBSjAVyhMTUFnxN:footersJr5x3ne1ZIHIK]" time="1.629" /><testcase classname="test.test_add_group" name="test_add_group[None:nameqTqryFTYb:headerIjBtLPUVdO:footer1T]" time="1.409" /><testcase classname="test.test_add_group" name="test_add_group[None:nameN3GtsJdg:headerjUoXFhF:footer2cl9Jt8tA]" time="2.386" /><testcase classname="test.test_add_group" name="test_add_group[None:nameBH8ZVh:headerd89PoxnRRAoS:footer5Nn]" time="3.313" /><testcase classname="test.test_add_group" name="test_add_group[None:namehi:headerXNjxtUN1sD:footer7x]" time="1.804" /><testcase classname="test.test_contacts" name="test_alldata_on_home_page" time="0.076" /><testcase classname="test.test_db_matches_ui" name="test_group_list" time="2.477"><failure message="assert False">app = &lt;fixture.application.Application object at 0x000001FBC1E2EA90&gt;
+db = &lt;fixture.db.DbFixture object at 0x000001FBC1E2EC70&gt;
+
+    def test_group_list(app, db):
+        print(timeit(lambda: app.group.get_group_list(), number=1))
+        def clean(group):
+            return Group(id=group.id, name=group.name.strip())
+        print(timeit(lambda: map(clean, db.get_group_list()), number=1000))
+&gt;       assert False # sorted(ui_list, key=Group.id_or_max) == sorted(db_list, key=Group.id_or_max)
+E       assert False
+
+test\test_db_matches_ui.py:9: AssertionError</failure></testcase><testcase classname="test.test_del_contact" name="test_delete_some_contact" time="1.806" /><testcase classname="test.test_del_group" name="test_delete_some_group" time="1.877" /><testcase classname="test.test_modify_contact" name="test_modify_contact" time="3.165" /><testcase classname="test.test_modify_group" name="test_modify_group" time="4.877" /></testsuite></testsuites>
