@@ -1,19 +1,29 @@
 import random
+import time
+
+from fixture.group import Group
 from fixture.contact import Contact
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
+
 def test_add_contacts_to_group(app):
+    if app.group.count() == 0:
+        app.group.create(Group(name="test"))
+
     # Выбираем группу
     groups = app.orm.get_group_list()
     group = random.choice(groups)
 
-    # Выбираем контакты
-    contacts = app.orm.get_contacts_not_in_group(group)
+    if app.contact.count() == 0:
+        app.contact.create(Contact(first_name="test"))
 
-    # Добавляем контакты в группу
-    for contact in contacts:
-        app.contact.add_to_group(contact, group)
+    # Выбираем контакты не в группе
+    contacts = app.orm.get_contacts_not_in_group(group)
+    contact = random.choice(contacts)
+
+    # Добавляем контакт в группу
+    app.contact.add_to_group(contact, group)
 
     # Фильтруем по группе контакты, получаем список контактов и сравниваем из бд
     ui_contacts = app.contact.get_group_contact_list(group)
@@ -22,6 +32,11 @@ def test_add_contacts_to_group(app):
 
 
 def test_remove_contact_from_group(app):
+    if app.group.count() == 0:
+        app.group.create(Group(name="test"))
+
+    app.open_home_page()
+
     # Выбираем группу
     groups = app.orm.get_group_list()
     group = random.choice(groups)
@@ -29,8 +44,15 @@ def test_remove_contact_from_group(app):
     # Фильтруем контакты по группе
     Select(app.wd.find_element(By.NAME, 'group')).select_by_value(group.id)
 
-    # Выбираем контакт
+    # Выбираем контакты из группы
     contacts = app.orm.get_contacts_in_group(group)
+
+    # Если в группе нет контактов, то добавляем новый и снова получаем список
+    if len(contacts) == 0:
+        app.contact.create(Contact(first_name='Awesome', last_name='Contact'), group)
+        time.sleep(1)
+        contacts = app.orm.get_contacts_in_group(group)
+
     contact = random.choice(contacts)
 
     # Удаляем контакт из группы

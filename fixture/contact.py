@@ -132,22 +132,24 @@ class ContactHelper:
         self.return_to_home_page()
         self.contact_cache = None
 
-    def create(self, contact):
+    def create(self, contact, group=None):
         wd = self.app.wd
         self.open_home_page()
         # init contact creation
         wd.find_element(By.LINK_TEXT, "add new").click()
-        self.fill_contact_form(contact)
+        self.fill_contact_form(contact, group)
         # submit contact creation
         wd.find_element(By.NAME, "submit").click()
         self.return_to_home_page()
         self.contact_cache = None
 
-    def fill_contact_form(self, contact):
+    def fill_contact_form(self, contact, group=None):
         wd = self.app.wd
         self.change_field_value("firstname", contact.first_name)
         self.change_field_value("middlename", contact.middle_name)
         self.change_field_value("lastname", contact.last_name)
+        if group:
+            Select(wd.find_element(By.NAME, 'new_group')).select_by_value(group.id)
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
