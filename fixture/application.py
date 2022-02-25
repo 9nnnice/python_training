@@ -21,7 +21,7 @@ class Application:
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
         self.base_url = base_url
-        self.orm = ORMFixture(host='127.0.0.1', name='addressbook', user='root', password='')
+        # self.orm = ORMFixture(host='127.0.0.1', name='addressbook', user='root', password='')
 
     def is_valid(self):
         try:
