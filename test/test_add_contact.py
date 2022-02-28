@@ -18,5 +18,5 @@ def test_add_contact(app, db, check_ui, json_contacts):
         new_contacts, key=Contact.id_or_max)
 
     if check_ui:
-        sorted(app.contact.get_contact_list(), key=Contact.id_or_max) == sorted(
+        assert sorted(app.contact.get_contact_list(), key=Contact.id_or_max) == sorted(
             new_contacts, key=Contact.id_or_max)
