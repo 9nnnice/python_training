@@ -23,7 +23,7 @@ def test_add_contacts_to_group(app):
 
     # Если нет контактов, то добавляем новый и снова получаем список
     if len(contacts) == 0:
-        app.contact.create(Contact(first_name='Awesome', last_name='Contact'), group)
+        app.contact.create(Contact(first_name='Awesome', last_name='Contact'))
         time.sleep(1)
         contacts = app.orm.get_contacts_in_group(group)
 
