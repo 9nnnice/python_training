@@ -20,6 +20,14 @@ def test_add_contacts_to_group(app):
 
     # Выбираем контакты не в группе
     contacts = app.orm.get_contacts_not_in_group(group)
+
+    # Если нет контактов, то добавляем новый и снова получаем список
+    if len(contacts) == 0:
+        app.contact.create(Contact(first_name='Awesome', last_name='Contact'), group)
+        time.sleep(1)
+        contacts = app.orm.get_contacts_in_group(group)
+
+    # Выбираем рандомный контак
     contact = random.choice(contacts)
 
     # Добавляем контакт в группу
