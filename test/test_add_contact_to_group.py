@@ -15,6 +15,9 @@ def test_add_contacts_to_group(app):
     groups = app.orm.get_group_list()
     group = random.choice(groups)
 
+    # Получаем список из бд
+    db_contacts = app.orm.get_contacts_in_group(group)
+
     if app.contact.count() == 0:
         app.contact.create(Contact(first_name="test"))
 
@@ -25,7 +28,7 @@ def test_add_contacts_to_group(app):
     if len(contacts) == 0:
         app.contact.create(Contact(first_name='Awesome', last_name='Contact'))
         time.sleep(1)
-        contacts = app.orm.get_contacts_in_group(group)
+        contacts = app.orm.get_contacts_not_in_group(group)
 
     # Выбираем рандомный контак
     contact = random.choice(contacts)
@@ -33,10 +36,9 @@ def test_add_contacts_to_group(app):
     # Добавляем контакт в группу
     app.contact.add_to_group(contact, group)
 
-    # Фильтруем по группе контакты, получаем список контактов и сравниваем из бд
+    # Фильтруем по группе контакты, получаем список контактов и сравниваем размеры списков?
     ui_contacts = app.contact.get_group_contact_list(group)
-    db_contacts = app.orm.get_contacts_in_group(group)
-    assert sorted(ui_contacts, key=Contact.id_or_max) == sorted(db_contacts, key=Contact.id_or_max)
+    assert len(db_contacts) + 1 == len(ui_contacts)
 
 
 def test_remove_contact_from_group(app):
@@ -68,6 +70,4 @@ def test_remove_contact_from_group(app):
 
     # Фильтруем по группе контакты, получаем список контактов и сравниваем из бд
     ui_contacts = app.contact.get_group_contact_list(group)
-    db_contacts = app.orm.get_contacts_in_group(group)
-    assert sorted(ui_contacts, key=Contact.id_or_max) == sorted(db_contacts, key=Contact.id_or_max)
-
+    assert len(contacts) - 1 == len(ui_contacts)
