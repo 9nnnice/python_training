@@ -16,17 +16,20 @@ def test_add_contacts_to_group(app):
     group = random.choice(groups)
 
     # Получаем список из бд
-    db_contacts = app.orm.get_contacts_in_group(group)
+    old_contacts = app.orm.get_contacts_in_group(group)
 
+    # Если контактов нет, то создаём новый
     if app.contact.count() == 0:
-        app.contact.create(Contact(first_name="test"))
+        new_contact = Contact(first_name="test")
+        app.contact.create(new_contact)
 
     # Выбираем контакты не в группе
     contacts = app.orm.get_contacts_not_in_group(group)
 
     # Если нет контактов, то добавляем новый и снова получаем список
     if len(contacts) == 0:
-        app.contact.create(Contact(first_name='Awesome', last_name='Contact'))
+        new_contact = Contact(first_name='Awesome', last_name='Contact')
+        app.contact.create(new_contact)
         time.sleep(1)
         contacts = app.orm.get_contacts_not_in_group(group)
 
@@ -36,9 +39,16 @@ def test_add_contacts_to_group(app):
     # Добавляем контакт в группу
     app.contact.add_to_group(contact, group)
 
-    # Фильтруем по группе контакты, получаем список контактов и сравниваем размеры списков?
-    ui_contacts = app.contact.get_group_contact_list(group)
-    assert len(db_contacts) + 1 == len(ui_contacts)
+    # Добавляем новый контакт группы в список полученный из бд
+    old_contacts.append(contact)
+
+    # Сравниваем длину списков до добавления и после
+    new_contacts = app.orm.get_contacts_in_group(group)
+    assert len(old_contacts) == len(new_contacts)
+
+    # А тут сравниваем сами списки
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(
+        new_contacts, key=Contact.id_or_max)
 
 
 def test_remove_contact_from_group(app):
@@ -68,6 +78,12 @@ def test_remove_contact_from_group(app):
     # Удаляем контакт из группы
     app.contact.remove_from_group(contact, group)
 
-    # Фильтруем по группе контакты, получаем список контактов и сравниваем из бд
-    ui_contacts = app.contact.get_group_contact_list(group)
-    assert len(contacts) - 1 == len(ui_contacts)
+    contacts.remove(contact)
+
+    # Сравниваем длину списков до удаления и после
+    new_contacts = app.orm.get_contacts_in_group(group)
+    assert len(contacts) == len(new_contacts)
+
+    # А тут сравниваем сами списки
+    assert sorted(contacts, key=Contact.id_or_max) == sorted(
+        new_contacts, key=Contact.id_or_max)
